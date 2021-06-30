@@ -1,0 +1,77 @@
+﻿@using ComTam_Store.Models
+@model ComTam_Store.Models.HoaDon
+
+@{
+    ViewBag.Title = "Create";
+    var Cart = ViewBag as List<ChitietHD>;
+}
+
+<h2>Thanh toán giỏ hàng</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <section id="checkout">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="checkout-area">
+                        
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="checkout-left">
+                                        <div class="panel-group" id="accordion">
+                                            <div class="panel panel-default aa-checkout-billaddress">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="" aria-expanded="true">
+                                                            Thông tin đơn hàng của bạn
+                                                        </a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapseThree" class="panel-collapse collapse in" aria-expanded="true" style="">
+                                                    <div class="panel-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    @Html.EditorFor(model => model.TenKh, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.TenKh, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })                                         
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    @Html.EditorFor(model => model.Diachi, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.Diachi, "", new { @class = "text-danger" })
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</section>
+}
+                                            
+
+
+                                            <div class="aa-payment-method">
+                                                <input type="submit" value="Đặt hàng" class="aa-browse-btn">
+                                            </div>

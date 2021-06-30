@@ -1,0 +1,136 @@
+﻿@model ComTam_Store.Models.Cart
+@{
+    ViewBag.Title = "ShowCart";
+}
+    <h2>Giỏ hàng của bạn</h2>
+    @if (Model != null)
+    {
+        <section id="cart-view">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="cart-view-area">
+                            <div class="cart-view-table">
+                                <form action="">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Hình ảnh</th>
+                                                    <th>Đơn Giá</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Thành tiền</th>
+                                                    <th>Xóa khỏi giỏ hàng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Items)
+                                                {
+                                                    double total = Convert.ToDouble(item.Product.Gia * item.SoLuong);
+
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(model => item.Product.SPName)</td>
+                                                        <td><img src="@Url.Content(item.Product.ImageLink)" style="width: 150px;" /></td>
+                                                        <td>@Html.DisplayFor(model => item.Product.Gia) VNĐ</td>
+
+                                                        <td>
+                                                            @using (Html.BeginForm("Update_Quantity", "ShoppingCart"))
+                                                            {
+                                                                <input type="hidden" value="@item.Product.IdSP" name="ID_Product" />
+                                                                <input class="aa-cart-quantity" type="number" value="@item.SoLuong" name="Quantity" min="1" max="@item.Product.SoLuong">
+                                                                <input type="submit" value="Cập nhật số lượng" />}
+                                                        </td>
+                                                        <td>@total VNĐ</td>
+                                                        <td><a class="remove" href="/ShoppingCart/RemoveCart/@item.Product.IdSP"><fa class="fa fa-close"></fa></a></td>
+                                                    </tr>
+
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </form>
+                                <!-- Cart Total view -->
+                                <div class="cart-view-total">
+                                    <table class="aa-totals-table">
+                                        <tbody>
+
+                                            <tr>
+                                                <th>Tổng cộng</th>
+                                                <td>@Model.Total_Money() VNĐ</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="checkout">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="checkout-area">
+                            <form action="">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="checkout-left">
+                                            <div class="panel-group" id="accordion">
+                                                <div class="panel panel-default aa-checkout-billaddress">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                                Thông tin giao hàng của bạn
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapseThree" class="panel-collapse collapse">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="aa-checkout-single-bill">
+                                                                        @Html.EditorFor(model => model.TenKh, new { htmlAttributes = new { @class = "form-control" } })
+                                                                        @Html.ValidationMessageFor(model => model.TenKh, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="aa-checkout-single-bill">
+                                                                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                                                                        @Html.ValidationMessageFor(model => model.SDT, "", new { @class = "text-danger" })
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="aa-checkout-single-bill">
+                                                                    @Html.EditorFor(model => model.Diachi, new { htmlAttributes = new { @class = "form-control" } })
+                                                                    @Html.ValidationMessageFor(model => model.Diachi, "", new { @class = "text-danger" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <a class="aa-cart-view-btn" href="@Url.Action("Checkout","ShoppingCart")">Thanh toán</a>
+     }
+
+
+
+
+
+
